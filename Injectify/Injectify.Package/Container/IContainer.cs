@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Injectify.Package.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace Injectify.Package.Container
         /// </summary>
         /// <typeparam name="TInterface"></typeparam>
         /// <typeparam name="TImplementation"></typeparam>
-        void Register<TInterface, TImplementation>() where TImplementation : TInterface;
+        void Register<TInterface, TImplementation>(LifeTime lifeTime) where TImplementation : TInterface;
         /// <summary>
         /// to Get object of its impl type 
         /// </summary>
@@ -24,7 +25,7 @@ namespace Injectify.Package.Container
         T Resolve<T>();
 
         // static 
-        void  Register(Type serviceType , Type implementationType);
+        void  Register(Type serviceType , Type implementationType, LifeTime lifeTime);
 
         object Resolve(Type serviceType);
 

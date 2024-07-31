@@ -1,27 +1,23 @@
-﻿using System;
+﻿using Injectify.Package.ContainerScope;
+using Injectify.Package.Enums;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Injectify.Package.Container
 {
     public class Container : IContainer
     {
-        private readonly ConcurrentDictionary<Type, Registration> _registrations = new ConcurrentDictionary<Type, Registration>();
+        public  readonly ConcurrentDictionary<Type, Registration> _registrations = new ConcurrentDictionary<Type, Registration>();
 
 
-        public void Register<TInterface, TImplementation>() where TImplementation : TInterface
+        public void Register<TInterface, TImplementation>(LifeTime lifeTime =  LifeTime.Transient) where TImplementation : TInterface
         {
-            Register(typeof(TInterface), typeof(TImplementation));
+            Register(typeof(TInterface), typeof(TImplementation) , lifeTime);
         }
 
-        public void Register(Type serviceType, Type implementationType)
+        public void Register(Type serviceType, Type implementationType , LifeTime lifeTime =  LifeTime.Transient)
         {
-            if(!_registrations.TryAdd(serviceType , new Registration(implementationType)))
+            if(!_registrations.TryAdd(serviceType , new Registration(implementationType , lifeTime)))
             {
                 throw new InvalidOperationException($"Type {serviceType} already registered !");
             }
@@ -37,11 +33,13 @@ namespace Injectify.Package.Container
                 throw new InvalidOperationException($"No Registeration Found for {serviceType}");
 
             //  here will take Registrartion and create New Instance 
-            return CreateInstance(registration.ImplementationType);
+            return registration.GetInstance(CreateInstance);
 
         }
 
-        private object CreateInstance(Type implementationType)
+
+        // Func<Type ,object > 
+        public object CreateInstance(Type implementationType)
         {
             // Create Instance =>  Calling Invoke on a ConstructorInfo instance. || Using Activator.CreateInstance().
             // basic constructor injection
@@ -53,6 +51,11 @@ namespace Injectify.Package.Container
             var parameter = constructor.GetParameters().Select(paramInfo => Resolve(paramInfo.ParameterType)).ToArray();
            return constructor.Invoke(parameter);
 
+        }
+
+        public IScope CreateScope()
+        {
+            return new Scope(this);
         }
 
 
