@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Injectify/TestProject/bin/Debug/net8.0
+/Injectify/TestProject/obj
+/Injectify/.vs/Injectify
+/Injectify/Injectify.Package/bin/Debug/net8.0
+/Injectify/Injectify.Package/obj
