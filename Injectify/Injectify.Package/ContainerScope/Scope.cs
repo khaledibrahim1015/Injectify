@@ -1,4 +1,4 @@
-﻿using Injectify.Package.Container;
+﻿using Injectify.Package.ContainerBuilder;
 using Injectify.Package.Enums;
 using System.Collections.Concurrent;
 namespace Injectify.Package.ContainerScope
@@ -7,8 +7,8 @@ namespace Injectify.Package.ContainerScope
     {
         private readonly ConcurrentDictionary<Type , object > _scopedInstances = new ConcurrentDictionary<Type , object >();    
 
-        private readonly Injectify.Package.Container.Container _container;
-        public Scope(Injectify.Package.Container.Container container)
+        private readonly Container _container;
+        public Scope(Container container)
         {
             _container = container;
         }
