@@ -3,27 +3,27 @@ Injectify is a lightweight, flexible Dependency Injection (DI) container for .NE
 
 ## Features
 # 1. Multiple Injection Types
-Constructor Injection
-Property Injection
-Method Injection
+  - Constructor Injection
+  - Property Injection
+  - Method Injection
 
 # 2. Lifetime Management
-  . Transient: A new instance is created each time it's requested
-  . Singleton: A single instance is created and reused for all requests
-  . Scoped: A single instance is created per scope (useful for web applications)
+  - Transient: A new instance is created each time it's requested
+  - Singleton: A single instance is created and reused for all requests
+  - Scoped: A single instance is created per scope (useful for web applications)
 
 
 # 3. Flexible Registration
-  . Generic registration
-  . Type-based registration
+  - Generic registration
+  - Type-based registration
 
 
 # 4. Scoped Resolution
-  Create and manage scopes for more granular control over object lifetimes
+  - Create and manage scopes for more granular control over object lifetimes
 
 
 # 5.Automatic Dependency Resolution
- Recursively resolves nested dependencies
+ - Recursively resolves nested dependencies
 
 
 # Thread-Safe
