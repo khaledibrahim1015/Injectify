@@ -1,10 +1,5 @@
-﻿
-using Injectify.Package.Container;
-using Injectify.Package.Enums;
-using System.ComponentModel;
-using Container = Injectify.Package.Container.Container;
-using Injectify.Package.Enums;
-using System.Xml.Linq;
+﻿using Injectify.Package;
+using Injectify.Package.ContainerBuilder;
 
 namespace TestProject
 {
@@ -13,13 +8,13 @@ namespace TestProject
         static void Main(string[] args)
         {
             #region Basic Registration and Resolution
-            //var conatiner = new Container();
-            //conatiner.Register<IService, Service>();
-            //var serviceObj = conatiner.Resolve<IService>();
-            //serviceObj.DoSomething();
+            var conatiner = new Container();
+            conatiner.Register<IService, Service>();
+            var serviceObj = conatiner.Resolve<IService>();
+            serviceObj.DoSomething();
             #endregion
 
-            // Lifetime Management 
+            #region  Lifetime Management 
             var conatiner = new Container();
 
             Singleton
@@ -40,9 +35,9 @@ namespace TestProject
             // Scoped 
             conatiner.Register<IService, Service>(LifeTime.Scoped);
             IService service1;
-            using ( var scope1 =  conatiner.CreateScope() )
+            using (var scope1 = conatiner.CreateScope())
             {
-                  service1 =  scope1.Resolve<IService>();
+                service1 = scope1.Resolve<IService>();
                 var service2 = scope1.Resolve<IService>();
 
                 //  should be true beacuse it deals as a singleton in the same scope 
@@ -56,12 +51,21 @@ namespace TestProject
                 //  should be False beacuse it deals as a Transient in the defferent scope 
                 Console.WriteLine(object.ReferenceEquals(service1, service3)); // Outputs: False
             }
+            #endregion
+            #region Property Injection 
+
+
+
+            var conatiner = new Container();
+            conatiner.Register<IService, Service>();
+            conatiner.Register<Client, Client>();
+            var client = conatiner.Resolve<Client>();
+            Console.WriteLine(client.Service != null);
 
 
 
 
-
-
+            #endregion
 
 
 
@@ -83,5 +87,16 @@ namespace TestProject
             => Console.WriteLine("Do Something");
     }
 
+
+    // Test Property Injection 
+    public class Client
+    {
+        [Inject]
+        public IService Service { get; set; }
+
+
+
+
+    }
 
 }
