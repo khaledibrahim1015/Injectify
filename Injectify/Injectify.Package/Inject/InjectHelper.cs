@@ -27,7 +27,21 @@ namespace Injectify.Package.Inject
             });
         }
 
-       
+        public static void InjectMethods(Container container, object instance)
+        {
+            var type = instance.GetType();
+            IEnumerable<MethodInfo> methods = type.GetMethods()
+                                                    .Where(methodInfo => methodInfo.GetCustomAttribute<InjectAttribute>() != null);
+
+            methods.ToList().ForEach(methodInfo =>
+            {
+                var parameters = methodInfo.GetParameters()
+                                                .Select(paramInfo => container.Resolve(paramInfo.ParameterType)).ToArray();
+                methodInfo.Invoke(instance, parameters);
+            });
+
+        }
+
 
 
 

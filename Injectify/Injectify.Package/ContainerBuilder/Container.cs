@@ -54,6 +54,7 @@ namespace Injectify.Package.ContainerBuilder
 
             // Inject Propert and Methods If Exists 
             InjectHelper.InjectProperties(this, instance );
+            InjectHelper.InjectMethods(this, instance);
 
 
             return instance;
