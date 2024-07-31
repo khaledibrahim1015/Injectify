@@ -1,7 +1,7 @@
-### Injectify
+## Injectify
 Injectify is a lightweight, flexible Dependency Injection (DI) container for .NET applications. It provides a  powerful way to manage dependencies in your projects, supporting constructor injection, property injection, and method injection.
 
-## Features
+### Features
 # 1. Multiple Injection Types
   - Constructor Injection
   - Property Injection
